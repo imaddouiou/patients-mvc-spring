@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="null"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+    <script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body class="bg-dark text-white">
+<!-- A grey horizontal navbar that becomes vertical on small screens -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+        <!-- Links -->
+        <ul class="navbar-nav">
+            <!-- Liens de la navbar claire intégrés -->
+            <li class="nav-item">
+                <a class="nav-link active" th:href="@{/user/index}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    Patient
+                </a>
+                <ul class="dropdown-menu">
+                    <li sec:authorize="hasAuthority('ADMIN')"><a class="dropdown-item" th:href="@{/admin/formPatients}" >Noveau</a></li>
+                    <li><a class="dropdown-item" th:href="@{/user/index}">Chercher</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="navbar-nav ">
+            <!-- Ceci ne s'affiche que pour les utilisateurs connectés -->
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <a  class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    <span sec:authentication="name" ></span>
+                </a>
+                <ul  class="dropdown-menu">
+                    <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a sec:authorize="!isAuthenticated()" class="nav-link" th:href="@{/login}">Login</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+    <section layout:fragment="content1">
+
+    </section>
+</body>
+</html>
